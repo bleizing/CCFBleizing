@@ -37,6 +37,8 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ((MainActivity) getActivity()).setActionBarTitle("CCFBleizing");
+
         Button btn_produk = (Button) getActivity().findViewById(R.id.btn_produk);
         btn_produk.setOnClickListener(new View.OnClickListener() {
             @Override
