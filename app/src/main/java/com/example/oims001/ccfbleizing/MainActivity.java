@@ -1,11 +1,13 @@
 package com.example.oims001.ccfbleizing;
 
+import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
@@ -19,6 +21,30 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         if (savedInstanceState == null) {
             MainFragment mainFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment, "MainFragment").commit();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -68,11 +94,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     public void changeToProductFragment() {
-        ProductFragement productFragement = new ProductFragement();
+        ProductFragement fragement = (ProductFragement) getSupportFragmentManager().findFragmentByTag("ProductFragment");
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, productFragement, "ProductFragment");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        if (fragement == null || !fragement.isInLayout()) {
+            fragement = new ProductFragement();
+        }
+
+        if (!fragement.isVisible()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragement, "ProductFragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }
