@@ -9,11 +9,19 @@
     tools:context="com.example.oims001.ccfbleizing.MainActivity">
 
     <Button
-        android:id="@+id/btn_produk"
+        android:id="@+id/btn_product"
         android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:text="Produk" />
+        android:text="Product" />
+
+    <Button
+        android:id="@+id/btn_maps"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:text="Maps" />
 
 </LinearLayout>

@@ -39,11 +39,19 @@ public class MainFragment extends Fragment {
 
         ((MainActivity) getActivity()).setActionBarTitle("CCFBleizing");
 
-        Button btn_produk = (Button) getActivity().findViewById(R.id.btn_produk);
-        btn_produk.setOnClickListener(new View.OnClickListener() {
+        Button btn_product = (Button) getActivity().findViewById(R.id.btn_product);
+        btn_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).changeToProductFragment();
+            }
+        });
+
+        Button btn_maps = (Button) getActivity().findViewById(R.id.btn_maps);
+        btn_maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeToMapsFragment();
             }
         });
     }

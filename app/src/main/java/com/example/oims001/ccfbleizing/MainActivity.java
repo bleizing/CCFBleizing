@@ -107,4 +107,19 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             fragmentTransaction.commit();
         }
     }
+
+    public void changeToMapsFragment() {
+        MapsFragment fragement = (MapsFragment) getSupportFragmentManager().findFragmentByTag("MapsFragment");
+
+        if (fragement == null || !fragement.isInLayout()) {
+            fragement = new MapsFragment();
+        }
+
+        if (!fragement.isVisible()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragement, "MapsFragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
 }
