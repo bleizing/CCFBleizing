@@ -31,11 +31,19 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_show_address"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="Show Address"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:text="Or"/>
 
     <Button
@@ -43,15 +51,8 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:text="Get Current Location"/>
-    <Button
-        android:id="@+id/btn_show_address"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
         android:layout_marginTop="125dp"
-        android:layout_centerHorizontal="true"
-        android:text="Show Address"/>
+        android:text="Get Current Location"/>
 
     <TextView
         android:id="@+id/tv_address"

@@ -1,5 +1,6 @@
 package com.example.oims001.ccfbleizing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
@@ -108,6 +109,21 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
     }
 
+    public void changeToWebviewFragment() {
+        WebviewFragment fragement = (WebviewFragment) getSupportFragmentManager().findFragmentByTag("WebviewFragment");
+
+        if (fragement == null || !fragement.isInLayout()) {
+            fragement = new WebviewFragment();
+        }
+
+        if (!fragement.isVisible()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragement, "WebviewFragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
     public void changeToMapsFragment() {
         MapsFragment fragement = (MapsFragment) getSupportFragmentManager().findFragmentByTag("MapsFragment");
 
@@ -121,5 +137,15 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+    }
+
+    public void openMapsActivity(double lat, double lng, String address) {
+        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putDouble("Lat", lat);
+        bundle.putDouble("Lng", lng);
+        bundle.putString("Address", address);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

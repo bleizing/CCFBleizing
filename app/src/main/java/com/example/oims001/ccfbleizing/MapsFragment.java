@@ -39,6 +39,7 @@ public class MapsFragment extends Fragment {
 
     private double longitude = 0;
     private double latitude = 0;
+    private String addressLocation = "";
 
     private LocationManager locationManager;
 
@@ -59,13 +60,13 @@ public class MapsFragment extends Fragment {
 
         ((MainActivity) getActivity()).setActionBarTitle("Maps");
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        getCurrentLocation();
-
         edit_lat = (EditText) getActivity().findViewById(R.id.edit_lat);
         edit_lng = (EditText) getActivity().findViewById(R.id.edit_lng);
 
         tv_address = (TextView) getActivity().findViewById(R.id.tv_address);
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        getCurrentLocation();
 
         Button btn_show_address = (Button) getActivity().findViewById(R.id.btn_show_address);
         btn_show_address.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +75,11 @@ public class MapsFragment extends Fragment {
                 if (!edit_lat.getText().toString().equals("") && !edit_lng.getText().toString().equals("")) {
                     latitude = Double.parseDouble(edit_lat.getText().toString());
                     longitude = Double.parseDouble(edit_lng.getText().toString());
+
+                    getAddress();
+                } else {
+                    tv_address.setText("Titik Lokasi Tidak Dapat Ditemukan");
                 }
-                getAddress();
             }
         });
 
@@ -83,7 +87,18 @@ public class MapsFragment extends Fragment {
         btn_get_current_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tv_address.setText("Titik Lokasi Tidak Dapat Ditemukan");
                 getCurrentLocation();
+            }
+        });
+
+        Button btn_view_on_map = (Button) getActivity().findViewById(R.id.btn_view_on_map);
+        btn_view_on_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (longitude != 0 && latitude != 0 && !addressLocation.equals("")) {
+                    ((MainActivity) getActivity()).openMapsActivity(latitude, longitude, addressLocation);
+                }
             }
         });
     }
@@ -106,6 +121,7 @@ public class MapsFragment extends Fragment {
             latitude = location.getLatitude();
 
             Log.d(TAG, "lat : " + latitude + " & lng : " + longitude);
+            getAddress();
         }
 
         @Override
@@ -126,17 +142,20 @@ public class MapsFragment extends Fragment {
     };
 
     private void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+        if (locationManager != null) {
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
 
-            if (locationManager != null) {
-                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
-                }
+                Log.d(TAG, "latitude : " + latitude + " & longitude : " + longitude);
+                getAddress();
             }
         }
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, locationListener);
     }
 
     private void getAddress() {
@@ -165,6 +184,7 @@ public class MapsFragment extends Fragment {
 
                     Log.w(TAG, result.toString());
                     tv_address.setText(address.getAddressLine(0));
+                    addressLocation = address.getAddressLine(0);
                 }
             } catch (IOException e) {
                 Log.e("tag", e.getMessage());

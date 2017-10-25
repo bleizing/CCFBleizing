@@ -47,6 +47,14 @@ public class MainFragment extends Fragment {
             }
         });
 
+        Button btn_webview = (Button) getActivity().findViewById(R.id.btn_webview);
+        btn_webview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeToWebviewFragment();
+            }
+        });
+
         Button btn_maps = (Button) getActivity().findViewById(R.id.btn_maps);
         btn_maps.setOnClickListener(new View.OnClickListener() {
             @Override
