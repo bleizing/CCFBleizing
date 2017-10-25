@@ -139,6 +139,21 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
     }
 
+    public void changeToKategoriFragment() {
+        KategoriFragment fragment = (KategoriFragment) getSupportFragmentManager().findFragmentByTag("KategoriFragment");
+
+        if (fragment == null || !fragment.isInLayout()) {
+            fragment = new KategoriFragment();
+        }
+
+        if (!fragment.isVisible()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment, "KategoriFragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
     public void openMapsActivity(double lat, double lng, String address) {
         Intent intent = new Intent(MainActivity.this, MapsActivity.class);
         Bundle bundle = new Bundle();

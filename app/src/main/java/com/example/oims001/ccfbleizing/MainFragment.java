@@ -62,5 +62,13 @@ public class MainFragment extends Fragment {
                 ((MainActivity) getActivity()).changeToMapsFragment();
             }
         });
+
+        Button btn_kategori = (Button) getActivity().findViewById(R.id.btn_kategori);
+        btn_kategori.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeToKategoriFragment();
+            }
+        });
     }
 }
