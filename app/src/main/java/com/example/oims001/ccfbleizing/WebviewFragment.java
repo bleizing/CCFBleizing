@@ -2,6 +2,7 @@ package com.example.oims001.ccfbleizing;
 
 
 import android.app.DownloadManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -33,6 +35,7 @@ public class WebviewFragment extends Fragment {
 
     private EditText edit_url;
     private WebView webView;
+    private TextView tv_back, tv_forward;
 
     public WebviewFragment() {
         // Required empty public constructor
@@ -51,11 +54,50 @@ public class WebviewFragment extends Fragment {
 
         webView = (WebView) getActivity().findViewById(R.id.webview);
         edit_url = (EditText) getActivity().findViewById(R.id.edit_url);
+        tv_back = (TextView) getActivity().findViewById(R.id.tv_back);
+        tv_forward = (TextView) getActivity().findViewById(R.id.tv_forward);
+        tv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                }
+            }
+        });
+
+        tv_forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (webView.canGoForward()) {
+                    webView.goForward();
+                }
+            }
+        });
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if(webView.canGoBack()){
+                    tv_back.setEnabled(true);
+                }else {
+                    tv_back.setEnabled(false);
+                }
+
+                if(webView.canGoForward()){
+                    tv_forward.setEnabled(true);
+                }else {
+                    tv_forward.setEnabled(false);
+                }
             }
         });
 
@@ -67,37 +109,6 @@ public class WebviewFragment extends Fragment {
         webView.clearCache(true);
         webView.clearHistory();
         webView.setDownloadListener(downloadListener);
-//        webView.setDownloadListener(new DownloadListener() {
-//            @Override
-//            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
-//
-//                DownloadManager.Request request = new DownloadManager.Request(
-//                        Uri.parse(url));
-//
-//                request.setMimeType(mimeType);
-//
-//                String cookies = CookieManager.getInstance().getCookie(url);
-//
-//                request.addRequestHeader("cookie", cookies);
-//
-//                request.addRequestHeader("User-Agent", userAgent);
-//
-//                request.setDescription("Downloading file...");
-//
-//                request.setTitle(URLUtil.guessFileName(url, contentDisposition,
-//                        mimeType));
-//
-//                request.allowScanningByMediaScanner();
-//
-//                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                request.setDestinationInExternalFilesDir(getActivity(),
-//                        Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(
-//                                url, contentDisposition, mimeType));
-//                DownloadManager dm = (DownloadManager) getActivity().getSystemService(DOWNLOAD_SERVICE);
-//                dm.enqueue(request);
-//                Toast.makeText(getActivity(), "Downloading File",
-//                        Toast.LENGTH_LONG).show();
-//            }});
 
         Button btn_enter = (Button) getActivity().findViewById(R.id.btn_enter);
         btn_enter.setOnClickListener(new View.OnClickListener() {
