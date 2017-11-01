@@ -39,4 +39,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:text="Kategori" />
+
+    <Button
+        android:id="@+id/btn_navbar"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:text="Navigation Menu" />
 </LinearLayout>

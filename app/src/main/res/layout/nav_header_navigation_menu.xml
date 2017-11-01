@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/side_nav_bar"
+    android:elevation="1dp"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingBottom="50dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="75dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:visibility="visible">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_profile"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+
+    <!--<ImageView
+        android:id="@+id/image_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        app:srcCompat="@android:drawable/sym_def_app_icon"/>-->
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="Yoke"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="yoke.endarto@otatrading.com"/>
+
+    <TextView
+        android:id="@+id/tv_point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="0 Point"/>
+
+</LinearLayout>

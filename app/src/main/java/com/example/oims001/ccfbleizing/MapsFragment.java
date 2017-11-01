@@ -15,15 +15,20 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,11 +40,15 @@ public class MapsFragment extends Fragment {
     private static final String TAG = "MapsFragment";
 
     private EditText edit_lat, edit_lng;
+    private AutoCompleteTextView actv_addresses;
     private TextView tv_address;
 
     private double longitude = 0;
     private double latitude = 0;
     private String addressLocation = "";
+
+    ArrayList<String> addressList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
 
     private LocationManager locationManager;
 
@@ -60,10 +69,34 @@ public class MapsFragment extends Fragment {
 
         ((MainActivity) getActivity()).setActionBarTitle("Maps");
 
+        actv_addresses = (AutoCompleteTextView) getActivity().findViewById(R.id.actv_addresses);
+
+        adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,addressList);
+        actv_addresses.setThreshold(1);
+        actv_addresses.setAdapter(adapter);
+
         edit_lat = (EditText) getActivity().findViewById(R.id.edit_lat);
         edit_lng = (EditText) getActivity().findViewById(R.id.edit_lng);
 
         tv_address = (TextView) getActivity().findViewById(R.id.tv_address);
+
+        actv_addresses.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getAddressInfo(getActivity(), s.toString());
+                Log.d(TAG, "addressList = " + addressList.size());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         getCurrentLocation();
@@ -191,6 +224,31 @@ public class MapsFragment extends Fragment {
             }
         } else {
             tv_address.setText("Titik Lokasi Tidak Dapat Ditemukan");
+        }
+    }
+
+    private void getAddressInfo(Context context, String locationName){
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        if (addressList.size() != 0) {
+            addressList.clear();
+        }
+        try {
+            List<Address> a = geocoder.getFromLocationName(locationName, 5);
+
+            for(int i=0;i<a.size();i++){
+                String city = a.get(0).getLocality();
+                String country = a.get(0).getCountryName();
+                String address = a.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                addressList.add(address);
+
+            }
+            adapter.notifyDataSetChanged();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < addressList.size(); i++) {
+            Log.d(TAG, "address = " + addressList.get(i));
         }
     }
 }

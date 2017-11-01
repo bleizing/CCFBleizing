@@ -1,6 +1,7 @@
 package com.example.oims001.ccfbleizing;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,6 +69,15 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) getActivity()).changeToKategoriFragment();
+            }
+        });
+
+        Button btn_navbar = (Button) getActivity().findViewById(R.id.btn_navbar);
+        btn_navbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NavigationMenuActivity.class);
+                startActivity(intent);
             }
         });
     }

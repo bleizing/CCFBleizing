@@ -51,15 +51,30 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="120dp"
         android:text="Get Current Location"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:text="Or"/>
 
     <TextView
         android:id="@+id/tv_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="Adsress : "/>
+        android:layout_marginTop="300dp"
+        android:text="Address : "/>
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_addresses"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:hint="Input Address"/>
 
     <Button
         android:id="@+id/btn_view_on_map"
