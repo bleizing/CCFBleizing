@@ -52,6 +52,8 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
 
         } else if (id == R.id.nav_change_password) {
 
+        } else if (id == R.id.nav_signout) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

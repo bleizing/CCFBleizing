@@ -21,8 +21,9 @@
         android:layout_height="96dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@mipmap/ic_launcher"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        app:civ_border_overlay="false"
+        app:civ_border_width="3dp"
+        app:civ_border_color="#F0F0FF"/>
 
     <!--<ImageView
         android:id="@+id/image_profile"
@@ -38,6 +39,7 @@
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Yoke"
+        android:textSize="18sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
