@@ -1,5 +1,8 @@
 package com.example.oims001.ccfbleizing;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class NavigationMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +34,14 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
+
+        fragmentManager = getFragmentManager();
+
+        // tampilan default awal ketika aplikasii dijalankan
+        if (savedInstanceState == null) {
+            fragment = new HomeMenuFragment();
+            callFragment(fragment);
+        }
     }
 
     @Override
@@ -45,9 +61,9 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            fragment = new HomeMenuFragment();
         } else if (id == R.id.nav_profile) {
-
+            fragment = new ProfileMenuFragment();
         } else if (id == R.id.nav_open_live_account) {
 
         } else if (id == R.id.nav_change_password) {
@@ -56,8 +72,19 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
 
         }
 
+        callFragment(fragment);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // untuk mengganti isi kontainer menu yang dipiih
+    private void callFragment(Fragment fragment) {
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.replace(R.id.frame_container_navigation, fragment);
+        fragmentTransaction.commit();
     }
 }

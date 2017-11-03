@@ -139,6 +139,21 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
     }
 
+    public void changeToCustomMapsFragment() {
+        CustomMapsFragment fragement = (CustomMapsFragment) getSupportFragmentManager().findFragmentByTag("CustomMapsFragment");
+
+        if (fragement == null || !fragement.isInLayout()) {
+            fragement = new CustomMapsFragment();
+        }
+
+        if (!fragement.isVisible()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragement, "CustomMapsFragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
     public void changeToKategoriFragment() {
         KategoriFragment fragment = (KategoriFragment) getSupportFragmentManager().findFragmentByTag("KategoriFragment");
 

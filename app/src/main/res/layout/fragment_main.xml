@@ -33,6 +33,14 @@
         android:text="Maps" />
 
     <Button
+        android:id="@+id/btn_custom_maps"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:text="Custom Maps" />
+
+    <Button
         android:id="@+id/btn_kategori"
         android:layout_width="125dp"
         android:layout_height="50dp"

@@ -64,6 +64,14 @@ public class MainFragment extends Fragment {
             }
         });
 
+        Button btn_custom_maps = (Button) getActivity().findViewById(R.id.btn_custom_maps);
+        btn_custom_maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).changeToCustomMapsFragment();
+            }
+        });
+
         Button btn_kategori = (Button) getActivity().findViewById(R.id.btn_kategori);
         btn_kategori.setOnClickListener(new View.OnClickListener() {
             @Override
