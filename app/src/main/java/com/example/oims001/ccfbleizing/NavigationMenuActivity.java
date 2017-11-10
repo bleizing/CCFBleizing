@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class NavigationMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -19,12 +21,16 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
     private FragmentTransaction fragmentTransaction;
     private Fragment fragment = null;
 
+    private TextView tv_content;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        tv_content = (TextView) findViewById(R.id.tv_content);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -39,6 +45,7 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
 
         // tampilan default awal ketika aplikasii dijalankan
         if (savedInstanceState == null) {
+            tv_content.setVisibility(View.GONE);
             fragment = new HomeMenuFragment();
             callFragment(fragment);
         }
@@ -61,15 +68,20 @@ public class NavigationMenuActivity extends AppCompatActivity implements Navigat
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
+            tv_content.setVisibility(View.GONE);
             fragment = new HomeMenuFragment();
         } else if (id == R.id.nav_profile) {
+            tv_content.setVisibility(View.GONE);
             fragment = new ProfileMenuFragment();
         } else if (id == R.id.nav_open_live_account) {
-
+            tv_content.setVisibility(View.GONE);
+            fragment = new OpenLiveAccountMenuFragment();
         } else if (id == R.id.nav_change_password) {
-
+            tv_content.setVisibility(View.GONE);
+            fragment = new ChangePasswordMenuFragment();
         } else if (id == R.id.nav_signout) {
-
+            tv_content.setVisibility(View.VISIBLE);
+            tv_content.setText("Sign Out");
         }
 
         callFragment(fragment);
